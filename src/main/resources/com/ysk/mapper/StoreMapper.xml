@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysk.mapper.StoreMapper">
+    <update id="update">
+        update store
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="size != null and size != ''">
+                size = #{size},
+            </if>
+            <if test="preDivisorValue != null and preDivisorValue != ''">
+                pre_divisor_value = #{preDivisorValue},
+            </if>
+            <if test="freePopulationNum != null and freePopulationNum != ''">
+                free_population_num = #{freePopulationNum},
+            </if>
+            <if test="aftDivisorValue != null and aftDivisorValue != ''">
+                aft_divisor_value = #{aftDivisorValue},
+            </if>
+            <if test="aftAddValue != null and aftAddValue != ''">
+                aft_add_value = #{aftAddValue},
+            </if>
+            <if test="passFlowDivisorValue != null and passFlowDivisorValue != ''">
+                pre_prepare_hour_num = #{passFlowDivisorValue},
+            </if>
+            <if test="prePrepareHourNum != null and prePrepareHourNum != ''">
+                aft_prepare_hour_num = #{prePrepareHourNum},
+            </if>
+            <if test="aftPrepareHourNum != null and aftPrepareHourNum != ''">
+                pass_flow_divisor_value = #{aftPrepareHourNum},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from store where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <select id="list" resultType="com.ysk.pojo.Store">
+        select * from store
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%',#{name},'%')
+            </if>
+            <if test="address != null and address !=''">
+                and address like CONCAT('%', #{address}, '%')
+            </if>
+            <if test="size != null and size !=''">
+                and size = #{size}
+            </if>
+        </where>
+
+    </select>
+
+</mapper>
